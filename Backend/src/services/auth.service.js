@@ -16,5 +16,13 @@ const loginUser = async(email, password) => {
     const user = await findUserByEmailByPassword(email, password);
     if(!user) throw new Error("Invalid email or password");
 
-    const isPasswordValid = await user.comparePassword()
+    const isPasswordValid = await user.comparePassword(password);
+    if(!isPasswordValid) throw new Error("Invalid email or password");
+    const token = signToken({id: user._id});
+    return {user, token};
+};
+
+module.exports = {
+    registerUser,
+    loginUser
 }
