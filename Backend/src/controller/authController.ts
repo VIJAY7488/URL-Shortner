@@ -3,7 +3,11 @@ import wrapAsyncFunction from "../utils/tryCatchWrapper";
 import { Request, Response } from "express";
 import logger from "../utils/logger";
 import bcrypt from "bcryptjs";    
-import {validateUserRegistration} from '../utils/validator'
+import {validateUserRegistration} from '../utils/validator';
+import { generateAccessToken, generateRefreshToken } from "../utils/generateToken";
+
+
+
 
 // Register a new user
 export const registerUser = wrapAsyncFunction(async (req: Request, res: Response) => {
@@ -36,6 +40,17 @@ export const registerUser = wrapAsyncFunction(async (req: Request, res: Response
     }); 
     await user.save();
     logger.info(`User registered successfully: ${email}`);
+
+    // issue tokens
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: false, 
+      sameSite: "strict",
+    });
+
     res.status(201).json({
         message: "User registered successfully",
         user: {
@@ -43,6 +58,59 @@ export const registerUser = wrapAsyncFunction(async (req: Request, res: Response
             name: user.name,
             email: user.email,
             avatar: user.avatar,
+            accessToken: accessToken
         },
     });
 }); 
+
+
+// Login User
+export const loginUser = wrapAsyncFunction(async(req: Request, res: Response) => {
+    logger.info('Login endpoint hit');
+
+    //Validation
+    const { error } = validateUserRegistration(req.body) ;
+    if(error){
+        logger.error(`Validation Error: ${error.details[0].message}`);
+        return res.status(400).json({ success: false, message: error.details[0].message });
+    }
+    
+    const {email, password} = req.body;
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+        logger.error('User not found');
+        return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+     // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+        logger.error('Invalid password or email');
+        return res.status(401).json({ success: false, message: 'Invalid password' });
+    }
+
+    // issue tokens
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
+    logger.info('Login successful');
+
+    res.status(200).json({
+        message: "Login successful",
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
+            accessToken: accessToken
+        },
+    });
+});
