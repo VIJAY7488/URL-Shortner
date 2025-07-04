@@ -5,6 +5,7 @@ import logger from "../utils/logger";
 import bcrypt from "bcryptjs";    
 import {validateUserRegistration} from '../utils/validator';
 import { generateAccessToken, generateRefreshToken } from "../utils/generateToken";
+import jwt from 'jsonwebtoken';
 
 
 
@@ -112,5 +113,30 @@ export const loginUser = wrapAsyncFunction(async(req: Request, res: Response) =>
             avatar: user.avatar,
             accessToken: accessToken
         },
+    });
+});
+
+
+// Refresh Token
+export const refreshTokenUser = wrapAsyncFunction(async(req: Request, res:     Response) => {
+    logger.info('Refresh token endpoint hit');
+
+    const token = req.cookies.refreshToken;
+    if (!token) {
+        logger.error('No token');
+        return res.status(401).json({ message: "No token" });
+    };
+    
+    const refreshSecret = process.env.REFRESH_TOKEN as string;
+    
+    const decoded = jwt.verify(token, refreshSecret) as jwt.JwtPayload;
+    const userId = decoded.id;
+
+    // issue new access token
+    logger.info('New access token generated successfully');
+    const newAccessToken = generateAccessToken(userId);
+    res.status(200).json({
+        success: true,
+        accessToken: newAccessToken
     });
 });
