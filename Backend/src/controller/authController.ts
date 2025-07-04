@@ -1,12 +1,17 @@
-import User from "../models/userModel";
-import wrapAsyncFunction from "../utils/tryCatchWrapper";
-import { Request, Response } from "express";
-import logger from "../utils/logger";
-import bcrypt from "bcryptjs";    
-import {validateUserRegistration} from '../utils/validator';
-import { generateAccessToken, generateRefreshToken } from "../utils/generateToken";
+import User from '../models/userModel';
+import wrapAsyncFunction from '../utils/tryCatchWrapper';
+import { Request, Response } from 'express';
+import logger from '../utils/logger';
+import bcrypt from 'bcryptjs';    
+import {validateUserLogin, validateUserRegistration} from '../utils/validator';
+import { generateAccessToken, generateRefreshToken } from '../utils/generateToken';
 import jwt from 'jsonwebtoken';
+import { Types } from 'mongoose';
 
+
+interface AuthenticatedRequest extends Request {
+    user: { userId: Types.ObjectId }
+}
 
 
 
@@ -27,7 +32,7 @@ export const registerUser = wrapAsyncFunction(async (req: Request, res: Response
     const existingUser = await User.findOne({ email });
     if (existingUser) {
         logger.error(`User with email ${email} already exists`);
-        return res.status(400).json({ message: "User already exists" });
+        return res.status(400).json({ message: 'User already exists' });
     };
 
     //hash the password
@@ -49,11 +54,11 @@ export const registerUser = wrapAsyncFunction(async (req: Request, res: Response
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: false, 
-      sameSite: "strict",
+      sameSite: 'strict',
     });
 
     res.status(201).json({
-        message: "User registered successfully",
+        message: 'User registered successfully',
         user: {
             id: user._id,
             name: user.name,
@@ -70,7 +75,7 @@ export const loginUser = wrapAsyncFunction(async(req: Request, res: Response) =>
     logger.info('Login endpoint hit');
 
     //Validation
-    const { error } = validateUserRegistration(req.body) ;
+    const { error } = validateUserLogin(req.body) ;
     if(error){
         logger.error(`Validation Error: ${error.details[0].message}`);
         return res.status(400).json({ success: false, message: error.details[0].message });
@@ -99,13 +104,13 @@ export const loginUser = wrapAsyncFunction(async(req: Request, res: Response) =>
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: false,
-      sameSite: "strict",
+      sameSite: 'strict',
     });
 
     logger.info('Login successful');
 
     res.status(200).json({
-        message: "Login successful",
+        message: 'Login successful',
         user: {
             id: user._id,
             name: user.name,
@@ -140,3 +145,39 @@ export const refreshTokenUser = wrapAsyncFunction(async(req: Request, res:     R
         accessToken: newAccessToken
     });
 });
+
+
+//Logout User
+export const logoutUser = wrapAsyncFunction(async(req: Request, res: Response) => {
+    logger.info('Logout endpoint hit');
+
+    res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'strict' });
+    logger.info('User Logged out successfully')
+    res.json({ message: 'Logged out' });
+});
+
+
+export const getUser = wrapAsyncFunction(async(req: AuthenticatedRequest, res: Response) => {
+    logger.info('Get user details endpoint hit');
+
+    const userId = req.user.userId;
+    
+    if (!userId) {
+        logger.info(`userId is missing or undefined: ${userId}`);
+        return res.status(401).json({ message: "Unauthorized: userId missing" });
+    }
+    
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    };
+
+    logger.info('User detail get successfully');
+
+    res.status(200).json({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+    });
+})
