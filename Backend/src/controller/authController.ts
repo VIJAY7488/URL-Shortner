@@ -54,7 +54,8 @@ export const registerUser = wrapAsyncFunction(async (req: Request, res: Response
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: false, 
-      sameSite: 'strict',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.status(201).json({
@@ -104,7 +105,8 @@ export const loginUser = wrapAsyncFunction(async(req: Request, res: Response) =>
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: false,
-      sameSite: 'strict',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     logger.info('Login successful');
@@ -127,15 +129,21 @@ export const refreshTokenUser = wrapAsyncFunction(async(req: Request, res:     R
     logger.info('Refresh token endpoint hit');
 
     const token = req.cookies.refreshToken;
+
     if (!token) {
-        logger.error('No token');
-        return res.status(401).json({ message: "No token" });
+        logger.error('No refresh token provided');
+        return res.status(401).json({ message: "No refresh token provided" });
     };
     
     const refreshSecret = process.env.REFRESH_TOKEN as string;
     
     const decoded = jwt.verify(token, refreshSecret) as jwt.JwtPayload;
-    const userId = decoded.id;
+    const userId = decoded.userId;
+
+    if (!userId) {
+        logger.error('Refresh token missing userId');
+        return res.status(401).json({ message: "Invalid refresh token" });
+    }
 
     // issue new access token
     logger.info('New access token generated successfully');
