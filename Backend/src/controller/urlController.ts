@@ -4,7 +4,7 @@ import Url from "../models/urlModel";
 import wrapAsyncFunction from "../utils/tryCatchWrapper";
 import logger from "../utils/logger";
 import errorHandler from "../utils/errorHandler";
-import { Types } from "mongoose";
+import QRCode from 'qrcode';
 
 
 export interface AuthenticatedRequest extends Request {
@@ -31,13 +31,21 @@ export const publicShortenUrl = wrapAsyncFunction(async(req: Request, res: Respo
     const shortCode = nanoid(7);
     const fullShortUrl = `${process.env.MY_URL}/${shortCode}`;
 
+    // Generate QR code (as base64 PNG string)
+    const qrCode = await QRCode.toDataURL(fullShortUrl);
+
     const newUrl = await Url.create({
         longUrl,
-        shortUrl: fullShortUrl
+        shortUrl: fullShortUrl,
+        qrcode: qrCode
     });
 
     logger.info('public short url created successfully');
-    res.status(201).json(newUrl);
+    res.status(201).json({
+        success: true,
+        ...newUrl.toObject(),
+        qrCode
+    });
 });
 
 
@@ -55,7 +63,7 @@ export const userShortenUrl = wrapAsyncFunction(async(req: AuthenticatedRequest,
     logger.info(`userId: ${userId}`)
 
     if(!userId){
-        throw new errorHandler.NotFoundError('user id is not found')
+        throw new errorHandler.UnauthorizedError('Unauthorized: userId missing')
     }
 
     // check if longUrl already exists for the same user
@@ -64,19 +72,47 @@ export const userShortenUrl = wrapAsyncFunction(async(req: AuthenticatedRequest,
       throw new errorHandler.ConflictError('URL already shortened by this user');
     };
 
+    // generate short code with nanoid
     const shortCode = nanoid(7);
     const fullShortUrl = `${process.env.MY_URL}/${shortCode}`;
+
+    // Generate QR code (as base64 PNG string)
+    const qrCode = await QRCode.toDataURL(fullShortUrl);
 
     const newUrl = await new Url({
         longUrl,
         shortUrl: fullShortUrl,
-        user: userId
+        user: userId,
+        qrcode: qrCode
     });
 
     await newUrl.save();
 
     logger.info('user short url created successfully');
-    res.status(201).json(newUrl);
+    res.status(201).json({
+        success: true,
+        ...newUrl.toObject(),
+        qrCode
+    });
 });
 
 
+
+export const getAllUserUrl = wrapAsyncFunction(async(req: AuthenticatedRequest, res: Response) => {
+    logger.info('get all user url endpoint hit');
+
+    const userId = req.user?.userId;
+
+    logger.info(`userId: ${userId}`)
+
+    if(!userId){
+        throw new errorHandler.UnauthorizedError('Unauthorized: userId missing')
+    };
+
+    const allUrls = await Url.find({ user: userId }).sort({ createdAt: -1 });
+
+
+    logger.info('All url get successfully');
+
+    res.status(201).json({success: true, allUrls});
+});
