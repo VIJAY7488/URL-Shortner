@@ -1,9 +1,8 @@
 import React from 'react'
-import Navbar from '../NavBar'
 
 const BackgroundUI = () => {
   return (
-    <div className='min-h-screen bg-gray-50 relative overflow-hidden'>
+    <div className='fixed inset-0 min-h-screen bg-gray-50 overflow-hidden'>
       <div className="absolute right-0 top-0 w-2/3 h-full">
         <div className="relative w-full h-full">
             <div
@@ -27,9 +26,6 @@ const BackgroundUI = () => {
         </div>
       </div>
 
-      <div className="relative z-10">
-        <Navbar />
-      </div>
     </div>
   )
 }

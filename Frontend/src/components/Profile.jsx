@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Edit2, LogOut, Mail, User, X } from "lucide-react";
+import { useLogout } from "../api/LogoutApi";
+import { AuthContext } from "../api/AuthContext";
+
 
 const Profile = () => {
-  const [user, setUser] = useState({
-    name: "Vijay",
-    email: "vijay@gmail.com",
-    avatar: null,
-  });
 
   const [showModal, setShowModal] = useState(false);
-  const [showSetting, setShowSettings] = useState(false);
+  const { logoutUser } = useLogout();
+  const { user } = useContext(AuthContext);
+
 
   const handleProfileClick = () => {
     setShowModal(true);
@@ -17,8 +17,12 @@ const Profile = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setShowSettings(false);
   };
+
+  const handleLogout = async() => {
+      await logoutUser();
+  }
+  
 
   return (
     <div>
@@ -28,7 +32,7 @@ const Profile = () => {
           onClick={handleProfileClick}
           className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:scale-105 transition-transform duration-200 shadow-lg"
         >
-          <User className="w-8 h-8 text-white" />
+          <img src={user.avatar} alt="" className="h-16 w-16 object-cover rounded-full" />
         </button>
       </div>
 
@@ -41,7 +45,7 @@ const Profile = () => {
               <div className="flex items-center justify-between">
                 <div className=" flex items-center space-x-4">
                   <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-                    <User className="w-8 h-8 text-gray-600" />
+                    <img src={user.avatar} alt="" className="h-16 w-16 object-cover rounded-full" />
                   </div>
                   <div>
                     <h2 className="text-white text-xl font-bold">
@@ -62,7 +66,7 @@ const Profile = () => {
               <div className="p-6">
                 <div className="space-y-4">
                   {/* Profile Info */}
-                  <div className="bg-gray-50 rounded-lg p-4 border border-red-500">
+                  <div className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-3">
                         <User className="w-5 h-5 text-gray-500" />
@@ -87,7 +91,7 @@ const Profile = () => {
                   </div>
 
                   <button
-                    // onClick={handleLogout}
+                    onClick={handleLogout}
                     className="w-full flex items-center justify-center bg-red-50 hover:bg-red-100 px-4 py-3 rounded-lg transition-colors border border-red-200"
                   >
                     <div className="flex items-center space-x-3">

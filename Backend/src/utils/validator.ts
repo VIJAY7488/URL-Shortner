@@ -30,5 +30,13 @@ export const validateUserLogin = (data: UserLoginData) => {
   });
 
   return schema.validate(data);
+};
+
+export const validateUrl = (data: string) => {
+  const schema = Joi.object({
+    longUrl: Joi.string().uri().required()
+  });
+
+  return schema.validate(data);
 }
 
