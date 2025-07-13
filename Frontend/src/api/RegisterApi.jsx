@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { useContext } from 'react';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from '../context/AuthContext';
+
 
 const REGISTER_URI = `${import.meta.env.VITE_API_BASE_URL}/auth/register`;
 
 
 export const useRegister = () => {
-    const { setUser } = useContext(AuthContext);
+    const { setUser, setAccessToken, setIsAuthenticated } = useContext(AuthContext);
+      
 
     const registerUser = async(name, email, password) => {
         try {
@@ -14,8 +16,24 @@ export const useRegister = () => {
             { name, email, password },
             { withCredentials: true});
 
-            setUser(response.data.user);
-            return response.data;
+            const userData = response.data.user;
+            
+            console.log(response.data.success);
+
+            if(response.data.success){
+                setIsAuthenticated(true);
+            }
+
+            setUser({
+                id: userData.id,
+                name: userData.name,
+                email: userData.email,
+                avatar: userData.avatar
+            });
+
+           setAccessToken(userData.accessToken)
+
+            return userData;
         } catch (error) {
             if (error.response && error.response.data) {
             throw new Error(error.response.data.message || "Registration failed");

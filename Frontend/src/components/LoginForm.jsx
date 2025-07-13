@@ -22,7 +22,6 @@ const LoginForm = ({ state }) => {
             setLoading(false);
             navigate('/');
             
-            console.log("signin success")
         } catch (err) {
             setLoading(false);
             setError(err.message || 'Login failed. Please check your credentials.');
