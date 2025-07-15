@@ -17,7 +17,7 @@ export const useLogin = () => {
 
             const userData = response.data.user;
 
-            console.log('Success' + response.data.success);
+            console.log('Success ' + response.data.success);
 
             if(response.data.success){
                 setIsAuthenticated(true);

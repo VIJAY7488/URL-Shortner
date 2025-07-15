@@ -40,7 +40,7 @@ export const useUserDetails = () => {
           setUser(retryResponse.data);
           return retryResponse.data;
         } catch (refreshErr) {
-            throw new Error("Session expired, please login again");
+            throw new Error("Session expired, please login again ", refreshErr);
         }
       }
       throw new Error("Failed to get user data");
