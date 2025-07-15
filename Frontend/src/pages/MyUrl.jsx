@@ -14,6 +14,7 @@ import {
   Copy,
   ExternalLink,
   Eye,
+  LineChart,
   Lock,
   PieChart,
   QrCode,
@@ -29,11 +30,16 @@ import {
   TabsList,
   TabsTrigger,
 } from "../components/ui/tabs";
+import Scanner from "../components/Scanner";
+import AnalyticsCharts from "../components/AnalyticsCharts";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
 
 const MyUrl = () => {
   const { allUrls } = useContext(UrlContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [copied, setCopied] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+  const [selectedUrl, setSelectedUrl] = useState(null);
 
   const totalClicks = useMemo(() => {
     return allUrls?.reduce((acc, url) => acc + (url.clicks || 0), 0);
@@ -48,7 +54,7 @@ const MyUrl = () => {
       (url) =>
         url.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         url.shortUrl?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        url.originalUrl?.toLowerCase().includes(searchTerm.toLowerCase())
+        url.longUrl?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [allUrls, searchTerm]);
 
@@ -63,6 +69,7 @@ const MyUrl = () => {
   };
 
   return (
+    <>
     <div className="container mx-auto px-4 py-8 relative z-10">
       <div className="mb-8">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
@@ -200,7 +207,7 @@ const MyUrl = () => {
 
                           <div className="flex items-center gap-2">
                             <span className="font-medium">Original:</span>
-                            <span className="truncate">{url.originalUrl}</span>
+                            <span className="truncate">{url.longUrl}</span>
                           </div>
 
                           <div className="flex items-center gap-4 text-xs text-gray-500">
@@ -234,9 +241,25 @@ const MyUrl = () => {
                         >
                           <ExternalLink className="h-4 w-4" />
                         </Button>
-                        <Button variant="outline" size="sm">
+
+                        {/* QR code */}
+                        <Button 
+                          onClick={() => setShowQR(showQR === url._id ? null : url._id)}
+                          variant="outline" size="sm">
                           <QrCode className="h-4 w-4" />
                         </Button>
+
+                        {/* Analytics */}
+                        <Button
+                          onClick={() => setSelectedUrl(url)}
+                          variant="outline"
+                          size="sm"
+                          className="text-blue-600 hover:text-blue-700"
+                        >
+                          <LineChart className="h-4 w-4" />
+                        </Button>
+
+                        {/* Delete */}
                         <Button
                           variant="outline"
                           size="sm"
@@ -246,14 +269,72 @@ const MyUrl = () => {
                         </Button>
                       </div>
                     </div>
+
+                    {showQR === url._id && (
+                      <div className="mt-4 flex justify-center">
+                        <Scanner />
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               ))
             )}
           </div>
         </TabsContent>
+
+        
+        <TabsContent value="analytics">
+          <AnalyticsCharts />
+        </TabsContent>
       </Tabs>
     </div>
+
+    {/* Individual URL Analytics Modal */}
+    <Dialog open={!!selectedUrl} onOpenChange={(open) => !open && setSelectedUrl(null)} >
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold flex items-center gap-2">
+            <LineChart className="h-5 w-5 text-blue-600" />
+            Analytics for 
+          </DialogTitle>
+        </DialogHeader>
+
+        {selectedUrl && (
+          <div className="space-y-6">
+            {/* URL Details */}
+            <Card className="bg-gray-50">
+              <CardContent className="p-4">
+                <div className="space-y-2 text-sm">
+                  <div className="space-y-2 text-sm">
+                    <span className="font-medium">Short URL:</span>
+                    <code className="bg-gray-100 px-2 py-1 rounded text-purple-600">
+                      {selectedUrl.shortUrl}
+                    </code>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Original:</span>
+                    <span className="truncate md:break-words text-gray-700">{selectedUrl.longUrl}</span>
+                  </div>
+
+                  <div className="flex items-center gap-4 text-xs text-gray-500">
+                    {/* <span>Created: {format(new Date(selectedUrl.createdAt), 'PP')}</span> */}
+                    <span className="flex items-center gap-1">
+                      <Eye className="h-3 w-3" />
+                      {selectedUrl.clicks} total clicks
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Individual Analytics Charts */}
+            <AnalyticsCharts />
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+    </>
   );
 };
 
