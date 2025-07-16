@@ -59,6 +59,7 @@ export const registerUser = wrapAsyncFunction(async (req: Request, res: Response
     });
 
     res.status(201).json({
+        success: true,
         message: 'User registered successfully',
         user: {
             id: user._id,
@@ -112,6 +113,7 @@ export const loginUser = wrapAsyncFunction(async(req: Request, res: Response) =>
     logger.info('Login successful');
 
     res.status(200).json({
+        success: true,
         message: 'Login successful',
         user: {
             id: user._id,
