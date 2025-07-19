@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext, useState, useMemo, useEffect, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -33,6 +33,9 @@ import {
 import Scanner from "../components/Scanner";
 import AnalyticsCharts from "../components/AnalyticsCharts";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import { format, subDays } from "date-fns"; 
+import { useDailyClickUrl } from "../api/DailyClickApi";
+import { ClickContext } from "../context/ClickContext";
 
 const MyUrl = () => {
   const { allUrls } = useContext(UrlContext);
@@ -40,6 +43,10 @@ const MyUrl = () => {
   const [copied, setCopied] = useState(false);
   const [showQR, setShowQR] = useState(false);
   const [selectedUrl, setSelectedUrl] = useState(null);
+
+  const { getDailyClick } = useDailyClickUrl();
+  const { dailyClick } = useContext(ClickContext);
+
 
   const totalClicks = useMemo(() => {
     return allUrls?.reduce((acc, url) => acc + (url.clicks || 0), 0);
@@ -58,7 +65,7 @@ const MyUrl = () => {
     );
   }, [allUrls, searchTerm]);
 
-  const handleCopy = async (url) => {
+  const handleCopy = useCallback(async (url) => {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(url);
@@ -66,7 +73,57 @@ const MyUrl = () => {
     } catch (err) {
       console.error("Failed to copy:", err);
     }
+  }, []);
+
+
+  // Generate analytics data
+  const generateAnalyticsData = () => {
+    const allClickHistory = allUrls?.flatMap(url => url.clickHistory || []);
+
+    // Clicks over time (last 7 days)
+    const clicksOverTime = Array.from({ length: 7 }, (_, i) => {
+      const date = subDays(new Date(), 6 - i);
+      const dayClicks = allClickHistory.filter(click => 
+        format(new Date(click.timestamp), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
+      ).length;
+      return {
+        date: format(date, 'MMM dd'),
+        clicks: dayClicks
+      };
+    });
+    return clicksOverTime;
+  }
+  const analyticsData = generateAnalyticsData();
+
+
+  //Get individual URL data
+  useEffect(() => {
+    if (selectedUrl?._id) {
+      getDailyClick(selectedUrl._id);
+    }
+  }, [selectedUrl?._id, getDailyClick]);
+
+  
+  console.log('dailyClick:', dailyClick);
+
+  const generateIndividualAnalyticsData = () => {
+    const clickHistory = dailyClick || [];
+    return Array.from({ length: 7 }, (_, i) => {
+      const date = subDays(new Date(), 6 - i);
+      const formattedDate = format(date, "yyyy-MM-dd");
+
+      const clickData = clickHistory.find(
+        (click) => format(new Date(click._id), "yyyy-MM-dd") === formattedDate
+      );  
+      return {
+        date: format(date, "MMM dd"),
+        clicks: clickData ? clickData.totalClicks : 0,
+      };
+    });
   };
+
+  const individualAnalyticsData = useMemo(() => generateIndividualAnalyticsData(), [dailyClick]);
+
 
   return (
     <>
@@ -211,7 +268,9 @@ const MyUrl = () => {
                           </div>
 
                           <div className="flex items-center gap-4 text-xs text-gray-500">
-                            <span>Created:</span>
+                            {url?.createdAt && (
+                              <span>Created: {format(new Date(url.createdAt), 'PP')}</span>
+                            )}
                             <span className="flex items-center gap-1">
                               <Eye className="h-3 w-3" />
                               {url.clicks} clicks
@@ -232,7 +291,8 @@ const MyUrl = () => {
                           variant="outline"
                           size="sm"
                         >
-                          {copied === url.shortUrl ? (<Check className="h-4 w-4 text-green-500" />): (<Copy className="h-4 w-4" />)}
+                          {copied === url.shortUrl ? (
+                            <Check className="h-4 w-4 text-green-500" />): (<Copy className="h-4 w-4" />)}
                         </Button>
                         <Button
                           onClick={() => window.open(url.shortUrl, "_blank")}
@@ -284,7 +344,7 @@ const MyUrl = () => {
 
         
         <TabsContent value="analytics">
-          <AnalyticsCharts />
+          <AnalyticsCharts data={analyticsData} />
         </TabsContent>
       </Tabs>
     </div>
@@ -318,7 +378,9 @@ const MyUrl = () => {
                   </div>
 
                   <div className="flex items-center gap-4 text-xs text-gray-500">
-                    {/* <span>Created: {format(new Date(selectedUrl.createdAt), 'PP')}</span> */}
+                    {selectedUrl?.createdAt && (
+                      <span>Created: {format(new Date(selectedUrl.createdAt), 'PP')}</span>
+                    )}
                     <span className="flex items-center gap-1">
                       <Eye className="h-3 w-3" />
                       {selectedUrl.clicks} total clicks
@@ -329,7 +391,7 @@ const MyUrl = () => {
             </Card>
 
             {/* Individual Analytics Charts */}
-            <AnalyticsCharts />
+            <AnalyticsCharts data={individualAnalyticsData} />
           </div>
         )}
       </DialogContent>
