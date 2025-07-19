@@ -11,7 +11,7 @@ export const useTotalUSerClickUrl = () => {
     const { setTotalClicks, setError } = useContext(ClickContext);
     const { accessToken } = useContext(AuthContext);
 
-    const getDailyClick = useCallback(async (urlId) => {
+    const totalUrlClick = useCallback(async (urlId) => {
         try {
     
             const response = await axios.get(`${Total_Click_User_API}/${urlId}`, { headers: {
@@ -41,5 +41,5 @@ export const useTotalUSerClickUrl = () => {
         }
     }, [accessToken, setTotalClicks, setError]);    
 
-    return { getDailyClick };
+    return { totalUrlClick };
 };
