@@ -116,7 +116,7 @@ const UrlForm = () => {
                     Custom URL  
                   </Label>  
                   <div className="flex">  
-                    <span className="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
+                    <span className="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-pink-200">
                       https://tinylink  
                     </span>  
                     <Input  

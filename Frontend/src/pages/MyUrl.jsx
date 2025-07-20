@@ -37,6 +37,7 @@ import { format, subDays } from "date-fns";
 import { useDailyClickUrl } from "../api/DailyClickApi";
 import { ClickContext } from "../context/ClickContext";
 import { useTotalUSerClickUrl } from "../api/TotalUserClickApi";
+import Navbar from "../components/NavBar";
 
 
 const MyUrl = () => {
@@ -140,8 +141,9 @@ const MyUrl = () => {
 
   return (
     <>
-    <div className="container mx-auto px-4 py-8 relative z-10">
-      <div className="mb-8">
+    <div className="container mx-auto py-2 relative z-10">
+      <Navbar/>
+      <div className="mb-8 mt-12">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
           My URLs
         </h1>
