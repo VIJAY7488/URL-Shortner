@@ -36,6 +36,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/
 import { format, subDays } from "date-fns"; 
 import { useDailyClickUrl } from "../api/DailyClickApi";
 import { ClickContext } from "../context/ClickContext";
+import { useTotalUSerClickUrl } from "../api/TotalUserClickApi";
+
 
 const MyUrl = () => {
   const { allUrls } = useContext(UrlContext);
@@ -46,11 +48,10 @@ const MyUrl = () => {
 
   const { getDailyClick } = useDailyClickUrl();
   const { dailyClick } = useContext(ClickContext);
+  const { totalUrlClick } = useTotalUSerClickUrl();
+  const { totalClicks } = useContext(ClickContext);
 
 
-  const totalClicks = useMemo(() => {
-    return allUrls?.reduce((acc, url) => acc + (url.clicks || 0), 0);
-  }, [allUrls]);
 
   const activeLinksCount = useMemo(() => {
     return allUrls?.filter((url) => !url.isExpired).length;
@@ -75,25 +76,37 @@ const MyUrl = () => {
     }
   }, []);
 
+  // Fetching Total url click
+  useEffect(() => {
+    if (allUrls.length > 0 && allUrls[0].user) {
+      console.log('allUrls =>', allUrls[0].user);
+      totalUrlClick(allUrls[0].user);
+    }
+  }, [allUrls, totalUrlClick]);
 
-  // Generate analytics data
-  const generateAnalyticsData = () => {
-    const allClickHistory = allUrls?.flatMap(url => url.clickHistory || []);
+
+  // Generate Total analytics data
+  const generateTotalAnalyticsData = () => {
+    const allClickHistory = totalClicks || [];
 
     // Clicks over time (last 7 days)
-    const clicksOverTime = Array.from({ length: 7 }, (_, i) => {
+    return Array.from({length: 7}, (_, i) => {
       const date = subDays(new Date(), 6 - i);
-      const dayClicks = allClickHistory.filter(click => 
-        format(new Date(click.timestamp), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
-      ).length;
+      const formattedDate = format(date, "yyyy-MM-dd");
+
+      const clickData = allClickHistory.find(
+        (click) => format(new Date(click._id), "yyyy-MM-dd") === formattedDate
+      );  
       return {
-        date: format(date, 'MMM dd'),
-        clicks: dayClicks
+        date: format(date, "MMM dd"),
+        clicks: clickData ? clickData.totalClicks : 0,
       };
-    });
-    return clicksOverTime;
+    })
+
+    
+    
   }
-  const analyticsData = generateAnalyticsData();
+  const totalAnalyticsData = useMemo(() => generateTotalAnalyticsData(), [totalClicks]);
 
 
   //Get individual URL data
@@ -162,7 +175,7 @@ const MyUrl = () => {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-blue-600">
-              {totalClicks}
+              {/* {totalClicks} */}
             </div>
           </CardContent>
         </Card>
@@ -344,7 +357,7 @@ const MyUrl = () => {
 
         
         <TabsContent value="analytics">
-          <AnalyticsCharts data={analyticsData} />
+          <AnalyticsCharts data={totalAnalyticsData} />
         </TabsContent>
       </Tabs>
     </div>

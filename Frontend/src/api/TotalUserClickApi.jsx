@@ -5,16 +5,16 @@ import { AuthContext } from '../context/AuthContext';
 
 
 
-const Total_Click_User_API = `${import.meta.env.VITE_API_BASE_URL}/analytics/user`;
+const Total_Click_User_API = `${import.meta.env.VITE_API_BASE_URL}/analytics/total-clicks`;
 
 export const useTotalUSerClickUrl = () => {
     const { setTotalClicks, setError } = useContext(ClickContext);
     const { accessToken } = useContext(AuthContext);
 
-    const totalUrlClick = useCallback(async (urlId) => {
+    const totalUrlClick = useCallback(async (userId) => {
         try {
     
-            const response = await axios.get(`${Total_Click_User_API}/${urlId}`, { headers: {
+            const response = await axios.get(`${Total_Click_User_API}/${userId}`, { headers: {
                Authorization: `Bearer ${accessToken}`,
               },
               withCredentials: true
@@ -22,7 +22,7 @@ export const useTotalUSerClickUrl = () => {
 
             const data = response.data;
     
-            console.log('Setting total click:', data);
+            console.log('Setting total click:', data.data);
 
 
             if(!data.success){
@@ -30,9 +30,9 @@ export const useTotalUSerClickUrl = () => {
                 return;
             }
     
-            setTotalClicks(data);
+            setTotalClicks(data.data);
             setError('');
-            return data;
+            return data.data;
         } catch (error) {
             console.error("Axios error:", error);
             const message = error?.response?.data?.message || "Failed to get total click";
