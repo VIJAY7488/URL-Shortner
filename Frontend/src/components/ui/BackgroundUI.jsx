@@ -1,7 +1,7 @@
 import React from 'react'
 import DarkBackgroundUi from './DarkBackgroundUi'
 import GeometricAccent from './GeometicAccent'
-import FloatingShapes from './FloatingShapes'
+
 
 const BackgroundUI = () => {
   return (
