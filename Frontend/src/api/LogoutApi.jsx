@@ -7,12 +7,16 @@ const LOGOUT_URI = `${import.meta.env.VITE_API_BASE_URL}/auth/logout`;
 
 
 export const useLogout = () => {
-    const { setUser } = useContext(AuthContext);
+    const { setUser, setIsAuthenticated } = useContext(AuthContext);
 
     const logoutUser = async() => {
         try {
-            const response = await axios.post(LOGOUT_URI, 
+            const response = await axios.post(LOGOUT_URI, {},
             { withCredentials: true});
+
+            if(response.data.success){
+                setIsAuthenticated(false);
+            }
 
             setUser(response.data.user);
             return response.data;
