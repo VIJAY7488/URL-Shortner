@@ -7,10 +7,18 @@ import {validateUserLogin, validateUserRegistration} from '../utils/validator';
 import { generateAccessToken, generateRefreshToken } from '../utils/generateToken';
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
+import { http } from 'winston';
+import { string } from 'joi';
 
 
 interface AuthenticatedRequest extends Request {
     user: { userId: Types.ObjectId }
+}
+
+const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax' as const,
 }
 
 
@@ -52,9 +60,7 @@ export const registerUser = wrapAsyncFunction(async (req: Request, res: Response
     const refreshToken = generateRefreshToken(user._id);
 
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: false, 
-      sameSite: 'lax',
+      ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -104,9 +110,7 @@ export const loginUser = wrapAsyncFunction(async(req: Request, res: Response) =>
     const refreshToken = generateRefreshToken(user._id);
 
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -161,7 +165,9 @@ export const refreshTokenUser = wrapAsyncFunction(async(req: Request, res:     R
 export const logoutUser = wrapAsyncFunction(async(req: Request, res: Response) => {
     logger.info('Logout endpoint hit');
 
-    res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'strict' });
+    res.clearCookie('refreshToken', { 
+        ...cookieOptions
+     });
     logger.info('User Logged out successfully')
     res.json({ message: 'Logged out' });
 });
