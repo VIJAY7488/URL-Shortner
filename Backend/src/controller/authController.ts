@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
 import { http } from 'winston';
 import { string } from 'joi';
+import Url from '../models/urlModel';
 
 
 interface AuthenticatedRequest extends Request {
@@ -199,4 +200,37 @@ export const getUser = wrapAsyncFunction(async(req: AuthenticatedRequest, res: R
         email: user.email,
         avatar: user.avatar,
     });
-})
+});
+
+
+//Delete Url with id
+export const deleteUrl = wrapAsyncFunction(async (req: Request, res: Response) => {
+    logger.info('Delete URL endpoint hit');
+
+    const { urlId } = req.params;
+
+    if (!urlId) {
+        logger.error('URL id not found in params');
+        return res.status(400).json({
+            success: false,
+            message: 'URL id is required',
+        });
+    }
+
+    const deletedUrl = await Url.findByIdAndDelete(urlId);
+
+    if (!deletedUrl) {
+        logger.error('URL not found for deletion with id: ' + urlId);
+        return res.status(404).json({
+            success: false,
+            message: 'URL not found',
+        });
+    }
+
+    logger.info('URL deleted successfully with id: ' + urlId);
+
+    return res.status(200).json({
+        success: true,
+        message: 'URL deleted successfully',
+    });
+});
