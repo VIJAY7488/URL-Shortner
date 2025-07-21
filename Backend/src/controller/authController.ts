@@ -17,8 +17,8 @@ interface AuthenticatedRequest extends Request {
 
 const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax' as const,
+    secure: true,
+    sameSite: 'strict' as const,
 }
 
 
@@ -166,10 +166,13 @@ export const logoutUser = wrapAsyncFunction(async(req: Request, res: Response) =
     logger.info('Logout endpoint hit');
 
     res.clearCookie('refreshToken', { 
-        ...cookieOptions
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        path: '/',
      });
     logger.info('User Logged out successfully')
-    res.json({ message: 'Logged out' });
+    res.json({ success: true, message: 'Logged out' });
 });
 
 
