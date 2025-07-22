@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useCallback, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
@@ -9,51 +9,189 @@ import { UrlContext } from '../context/UrlContext';
 import { AuthContext } from '../context/AuthContext';
 import { useUserUrl } from '../api/UserUrl';
 import ShortUrl from './ShortUrl';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+// Custom hook for form state management
+const useFormState = () => {
+  const [formData, setFormData] = useState({
+    originalUrl: '',
+    title: '',
+    customUrl: '',
+    password: '',
+    expirationTime: ''
+  });
+  
+  const [options, setOptions] = useState({
+    isOneTime: false,
+    showAdvancedOptions: false
+  });
+  
+  const [isLoading, setIsLoading] = useState(false);
+
+  const updateFormData = useCallback((field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  }, []);
+
+  const updateOptions = useCallback((field, value) => {
+    setOptions(prev => ({ ...prev, [field]: value }));
+  }, []);
+
+  const resetForm = useCallback(() => {
+    setFormData(prev => ({ ...prev, originalUrl: '', title: '' }));
+  }, []);
+
+  return {
+    formData,
+    options,
+    isLoading,
+    updateFormData,
+    updateOptions,
+    setIsLoading,
+    resetForm
+  };
+};
+
+// Memoized form field component
+const FormField = React.memo(({ 
+  id, 
+  label, 
+  type = 'text', 
+  placeholder, 
+  value, 
+  onChange, 
+  required = false,
+  min,
+  prefix 
+}) => (
+  <div className="space-y-2">
+    <Label htmlFor={id} className="text-lg font-semibold bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+      {label}
+    </Label>
+    {prefix ? (
+      <div className="flex">
+        <span className="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-pink-200">
+          {prefix}
+        </span>
+        <Input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          min={min}
+          required={required}
+          className="rounded-l-none flex-1 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
+        />
+      </div>
+    ) : (
+      <Input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        min={min}
+        required={required}
+        className="flex-1 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
+      />
+    )}
+  </div>
+));
+
+FormField.displayName = 'FormField';
+
+// Memoized switch field component
+const SwitchField = React.memo(({ id, label, checked, onChange, className = "" }) => (
+  <div className={`flex items-center space-x-2 ${className}`}>
+    <Switch id={id} checked={checked} onCheckedChange={onChange} />
+    <Label htmlFor={id} className="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+      {label}
+    </Label>
+  </div>
+));
+
+SwitchField.displayName = 'SwitchField';
 
 const UrlForm = () => {
-  const [originalUrl, setOriginalUrl] = useState('');
-  const [title, setTitle] = useState('');
-  const [customUrl, setCustomUrl] = useState('');
-  const [password, setPassword] = useState('');
-  const [isOneTime, setIsOneTime] = useState(false);
-  const [expirationTime, setExpirationTime] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+  const {
+    formData,
+    options,
+    isLoading,
+    updateFormData,
+    updateOptions,
+    setIsLoading,
+    resetForm
+  } = useFormState();
+
   const { generatePublicUrl } = usePublicUrl();
   const { generateUserUrl } = useUserUrl();
   const { error } = useContext(UrlContext);
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  // Memoize form handlers
+  const handleFormDataChange = useCallback((field) => (e) => {
+    updateFormData(field, e.target.value);
+  }, [updateFormData]);
+
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
-    if (!originalUrl) return;
+    if (!formData.originalUrl) return;
 
     setIsLoading(true);
 
-
     try {
-      if(isAuthenticated){
-        await generateUserUrl(originalUrl, title, customUrl, password, isOneTime, expirationTime);
-        setOriginalUrl('');
-      } 
-      else{
-        await generatePublicUrl(originalUrl);
-        setOriginalUrl('');
+      if (isAuthenticated) {
+        await generateUserUrl(
+          formData.originalUrl,
+          formData.title,
+          formData.customUrl,
+          formData.password,
+          options.isOneTime,
+          formData.expirationTime
+        );
+      } else {
+        await generatePublicUrl(formData.originalUrl);
       }
+      resetForm();
     } catch (error) {
-      console.error(error);
+      console.error('URL generation failed:', error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [
+    formData,
+    options.isOneTime,
+    isAuthenticated,
+    generateUserUrl,
+    generatePublicUrl,
+    resetForm,
+    setIsLoading
+  ]);
 
-  useEffect(() => {
-    if(isAuthenticated === false && showAdvancedOptions){
+  const handleAdvancedToggle = useCallback((checked) => {
+    if (!isAuthenticated) {
       navigate('/login');
+      return;
     }
-  }, [isAuthenticated, showAdvancedOptions, navigate])
+    updateOptions('showAdvancedOptions', checked);
+  }, [isAuthenticated, navigate, updateOptions]);
+
+  const handleOneTimeToggle = useCallback((checked) => {
+    updateOptions('isOneTime', checked);
+  }, [updateOptions]);
+
+  // Memoize button state
+  const isSubmitDisabled = useMemo(() => 
+    isLoading || !formData.originalUrl.trim(), 
+    [isLoading, formData.originalUrl]
+  );
+
+  // Memoize button text
+  const buttonText = useMemo(() => 
+    isLoading ? 'Shortening...' : 'Shorten URL', 
+    [isLoading]
+  );
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -64,119 +202,85 @@ const UrlForm = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-8">
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
-            <div className="space-y-2">
-              <Label htmlFor="url" className="text-lg font-semibold bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-                Enter your long URL
-              </Label>
-              <Input
-                id="url"
-                type="url"
-                placeholder="https://example.com/very-long-url"
-                value={originalUrl}
-                onChange={(e) => setOriginalUrl(e.target.value)}
-                className="flex-1 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
-                required
-              />
-            </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <FormField
+              id="url"
+              label="Enter your long URL"
+              type="url"
+              placeholder="https://example.com/very-long-url"
+              value={formData.originalUrl}
+              onChange={handleFormDataChange('originalUrl')}
+              required
+            />
 
-          {/* Advanced Options */}
-          <div className='space-y-4 border-t border-border pt-6'>
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-                Advanced Options
-              </h3>
-              <Switch
-                id="custom-title-toggle"
-                checked={showAdvancedOptions}
-                onCheckedChange={setShowAdvancedOptions}
-              />
-            </div>
-            
-            {showAdvancedOptions && (
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="title" className='bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent'>
-                  Custom Title
-                  </Label>
-                  <Input
+            {/* Advanced Options */}
+            <div className="space-y-4 border-t border-border pt-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+                  Advanced Options
+                </h3>
+                <Switch
+                  id="advanced-options-toggle"
+                  checked={options.showAdvancedOptions}
+                  onCheckedChange={handleAdvancedToggle}
+                />
+              </div>
+              
+              {options.showAdvancedOptions && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  <FormField
                     id="title"
+                    label="Custom Title"
                     placeholder="My awesome link"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className='flex-1 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400'
+                    value={formData.title}
+                    onChange={handleFormDataChange('title')}
                   />
-                </div>
-          
-                <div className="space-y-2">  
-                  <Label htmlFor="custom" className='bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent'>
-                    Custom URL  
-                  </Label>  
-                  <div className="flex">  
-                    <span className="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-pink-200">
-                      https://tinylink  
-                    </span>  
-                    <Input  
-                      id="custom"  
-                      placeholder="my-link"  
-                      value={customUrl}  
-                      onChange={(e) => setCustomUrl(e.target.value)}
-                      className="rounded-l-none flex-1 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
-                    />  
-                  </div>  
-                </div>  
 
-                <div className="space-y-2">
-                  <Label htmlFor="password" className='bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent'>
-                    Password Protection
-                  </Label>
-                  <Input
+                  <FormField
+                    id="custom-url"
+                    label="Custom URL"
+                    placeholder="my-link"
+                    value={formData.customUrl}
+                    onChange={handleFormDataChange('customUrl')}
+                    prefix="https://tinylink"
+                  />
+
+                  <FormField
                     id="password"
+                    label="Password Protection"
                     type="password"
                     placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className='flex-1 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400'
+                    value={formData.password}
+                    onChange={handleFormDataChange('password')}
                   />
-                </div>
 
-                <div className="space-y-2">
-                  <Label className='bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent'>
-                    Expiration Time (minutes)
-                  </Label>
-                  <Input
-                    id="expirationTime"
+                  <FormField
+                    id="expiration-time"
+                    label="Expiration Time (minutes)"
+                    type="number"
                     placeholder="60"
-                    value={expirationTime}
-                    onChange={(e) => setExpirationTime(e.target.value)}
-                    className='flex-1 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400'
+                    min="1"
+                    value={formData.expirationTime}
+                    onChange={handleFormDataChange('expirationTime')}
                   />
-                </div>
 
-                <div className="flex items-center space-x-2">
-                  <Switch
+                  <SwitchField
                     id="one-time"
-                    checked={isOneTime}
-                    onCheckedChange={setIsOneTime}
+                    label="Single-use URL (link expires after first click)"
+                    checked={options.isOneTime}
+                    onChange={handleOneTimeToggle}
                   />
-                  <Label htmlFor="one-time" className='bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent'>
-                    Single-use URL (link expires after first click)
-                  </Label>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
 
-        <Button
-          type="submit"
-          disabled={isLoading || !originalUrl}
-          className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          {isLoading ? 'Shortening...' : 'Shorten URL'}
-        </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitDisabled}
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              {buttonText}
+            </Button>
           </form>
           <ShortUrl />
         </CardContent>
