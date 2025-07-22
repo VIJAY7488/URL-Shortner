@@ -1,14 +1,25 @@
-import { url } from "inspector";
+import { timeStamp } from "console";
 import mongoose, { Schema, Types } from "mongoose";
 
 interface clickSchemaProps {
     shortUrl: Types.ObjectId;     
     user?: Types.ObjectId;   
-    date: Date;              
+    timestamp: Date;              
     count: number;  
-    browser: string,
-    os: string,
-    deviceType: string         
+    browser?: string,
+    os?: string,
+    deviceType?: string,
+    ipHash?: string,
+    country?: string,
+    city?: string,
+    referer?: string,     // Traffic source
+    userAgent?: string,
+    isBot?: boolean,     // Bot detection
+    utm_source?: string,
+    utm_medium?: string,
+    utm_campaign?: string,
+    utm_term?: string,
+    utm_content?: string
 }
 
 const clickSchema = new Schema<clickSchemaProps>({
@@ -23,22 +34,83 @@ const clickSchema = new Schema<clickSchemaProps>({
         ref: 'User',
         index: true
     },
-    date: {
-        type: Schema.Types.Date,
+    timestamp: {
+        type: Date,
         required: true,
+        default: Date.now,
+        index: true     // Added index for time-based queries
     },
     count: {
         type: Number,
-        default: 0,
-        required: true
+        default: 1,
+        required: true,
+        min: 1
     },
-    browser: String,
-    os: String,
-    deviceType: String,
-});
+    browser: {
+        type: String,
+        trim: true,
+        maxlength: 100
+    },
+    os: {
+        type: String,
+        trim: true,
+        maxlength: 100
+    },
+    deviceType: {
+        type: String,
+        enum: ['Mobile', 'Desktop', 'Tablet', 'Unknown'],
+        default: 'Unknown'
+    },
+    ipHash: {
+        type: String,
+        index: true    // For unique visitor tracking
+    },
+    country: {
+        type: String,
+        maxlength: 100,
+        index: true,   // For geographic analysis
+    },
+    city: {
+        type: String,
+        maxlength: 100
+    },
+    referer: {
+        type: String,
+        maxlength: 500,
+        index: true,   // For traffic source analysis
+    },
+    userAgent: {
+        type: String,
+        maxlength: 1000,
+    },
+    isBot: {
+        type: Boolean,
+        default: false,
+        index: true     // To filter out bot traffic
+    },
+    utm_source: String,
+    utm_medium: String,
+    utm_campaign: String,
+    utm_term: String,
+    utm_content: String
 
-clickSchema.index({ shortUrl: 1, date: 1 }, { unique: true });
+}, {timestamps: true, collection: 'clicks'});
 
-const Click = mongoose.model('Click', clickSchema);
+
+//Indexes
+clickSchema.index({ shortUrl: 1, timeStamp: 1 });
+clickSchema.index({ user: 1, timeStamp: 1 });
+clickSchema.index({ shortUrl: 1, ipHash: 1 });
+clickSchema.index({ country: 1, timeStamp: 1 });
+clickSchema.index({ timeStamp: -1 });   // For recent activity queries
+clickSchema.index({ isBot: 1, timeStamp: 1 });
+
+
+// TTL index for automatic data cleanup (optional - removes data after 2 years)
+clickSchema.index({ timestamp: 1 }, { expireAfterSeconds: 63072000 });
+
+
+const Click = mongoose.model<clickSchemaProps>('Click', clickSchema);
 
 export default Click;
+export { clickSchemaProps };
