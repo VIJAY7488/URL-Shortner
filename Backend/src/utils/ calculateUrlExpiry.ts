@@ -1,23 +1,14 @@
-import moment from 'moment-timezone';
+import { addMinutes } from 'date-fns';
+import logger from './logger';
 
+export const calculateUrlExpiry = (expireAt: number): Date | undefined => {
+  if (typeof expireAt !== 'number' || isNaN(expireAt) || expireAt <= 0) {
+    logger.warn('Invalid expireAt input:', expireAt);
+    return undefined;
+  }
 
+  const expirationDate = addMinutes(new Date(), expireAt);
+  logger.info('Calculated Expiry Date:', expirationDate);
 
-type ExpireAtInput =  {
-    value: number,
-}
-
-
-
-
-export const calculateUrlExpiry = (expireAt: ExpireAtInput) => {
-    if (!expireAt || typeof expireAt !== 'object') return undefined;
-
-    const { value } = expireAt;
-
-    if (typeof value !== 'number' || value <= 0) return undefined;
-
-
-    const expirationDate = moment.tz('Asia/Kolkata').add(value, 'minutes').format('YYYY-MM-DD HH:mm:ss');
-
-    return expirationDate;
-}
+  return expirationDate;
+};
