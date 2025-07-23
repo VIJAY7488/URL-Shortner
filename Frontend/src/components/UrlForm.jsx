@@ -5,7 +5,6 @@ import { Input } from '../components/ui/input';
 import { Switch } from '../components/ui/switch';
 import { Button } from '../components/ui/button';
 import { usePublicUrl } from '../api/PublicUrlApi';
-import { UrlContext } from '../context/UrlContext';
 import { AuthContext } from '../context/AuthContext';
 import { useUserUrl } from '../api/UserUrl';
 import ShortUrl from './ShortUrl';
@@ -17,8 +16,8 @@ const useFormState = () => {
     originalUrl: '',
     title: '',
     customUrl: '',
-    password: '',
-    expirationTime: ''
+    passwordForUrl: '',
+    expirationTime: null
   });
   
   const [options, setOptions] = useState({
@@ -69,7 +68,7 @@ const FormField = React.memo(({
     </Label>
     {prefix ? (
       <div className="flex">
-        <span className="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-pink-200">
+        <span className="inline-flex items-center px-3 text-sm text-white border border-r-0 border-gray-300 rounded-l-md bg-pink-500">
           {prefix}
         </span>
         <Input
@@ -125,7 +124,6 @@ const UrlForm = () => {
 
   const { generatePublicUrl } = usePublicUrl();
   const { generateUserUrl } = useUserUrl();
-  const { error } = useContext(UrlContext);
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -146,7 +144,7 @@ const UrlForm = () => {
           formData.originalUrl,
           formData.title,
           formData.customUrl,
-          formData.password,
+          formData.passwordForUrl,
           options.isOneTime,
           formData.expirationTime
         );

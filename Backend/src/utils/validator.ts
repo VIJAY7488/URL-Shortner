@@ -37,6 +37,6 @@ export const validateUrl = (data: string) => {
     longUrl: Joi.string().uri().required()
   });
 
-  return schema.validate(data);
+  return schema.validate({longUrl: data});
 }
 

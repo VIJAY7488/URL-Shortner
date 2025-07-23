@@ -10,12 +10,21 @@ export const useUserUrl = () => {
     const { setUserUrl, setError } = useContext(UrlContext);
     const { accessToken } = useContext(AuthContext);
 
-    const generateUserUrl = async (longUrl) => {
+    const generateUserUrl = async (longUrl, title, customUrl, passwordProtected, singleUse, expirationTime) => {
         try {
             console.log("Requesting:", User_URL_API);
-            console.log("Payload:", { longUrl });
+            
+            console.log("Payload:", {
+  longUrl,
+  title,
+  customUrl,
+  passwordProtected,
+  singleUse,
+  expireAt: expirationTime
+});
+
     
-            const response = await axios.post(User_URL_API, { longUrl }, { headers: {
+            const response = await axios.post(User_URL_API, { longUrl, title, customUrl, passwordProtected, singleUse, expireAt: Number(expirationTime) }, { headers: {
                Authorization: `Bearer ${accessToken}`,
               },
               withCredentials: true
@@ -27,10 +36,11 @@ export const useUserUrl = () => {
 
             if(!data.success){
                 setError(data.message);
+                setUserUrl('');
                 return;
             }
     
-            setUserUrl(data);
+            setUserUrl(data.data);
             setError('');
             return data;
         } catch (error) {
