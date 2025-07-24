@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import mongoose, { Schema, Types } from "mongoose";
 
 interface clickSchemaProps {
@@ -42,9 +41,9 @@ const clickSchema = new Schema<clickSchemaProps>({
     },
     count: {
         type: Number,
-        default: 1,
+        default: 0,
         required: true,
-        min: 1
+        min: 0
     },
     browser: {
         type: String,
@@ -98,12 +97,12 @@ const clickSchema = new Schema<clickSchemaProps>({
 
 
 //Indexes
-clickSchema.index({ shortUrl: 1, timeStamp: 1 });
-clickSchema.index({ user: 1, timeStamp: 1 });
+clickSchema.index({ shortUrl: 1, timestamp: 1 });
+clickSchema.index({ user: 1, timestamp: 1 });
 clickSchema.index({ shortUrl: 1, ipHash: 1 });
-clickSchema.index({ country: 1, timeStamp: 1 });
-clickSchema.index({ timeStamp: -1 });   // For recent activity queries
-clickSchema.index({ isBot: 1, timeStamp: 1 });
+clickSchema.index({ country: 1, timestamp: 1 });
+clickSchema.index({ timestamp: -1 });   // For recent activity queries
+clickSchema.index({ isBot: 1, timestamp: 1 });
 
 
 // TTL index for automatic data cleanup (optional - removes data after 2 years)
