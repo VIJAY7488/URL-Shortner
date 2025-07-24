@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Url from '../models/urlModel';
 import wrapAsyncFunction from '../utils/tryCatchWrapper';
 import logger from '../utils/logger';
-import errorHandler from '../utils/errorHandler';
+import errorHandler from '../utils/apiResponse';
 
 
 export const redirectPublicUrlToLongUrl = wrapAsyncFunction(async(req: Request, res: Response) => {
