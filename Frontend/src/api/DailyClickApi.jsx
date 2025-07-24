@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useCallback, useContext } from 'react';
 import { ClickContext } from '../context/ClickContext';
 import { AuthContext } from '../context/AuthContext';
+import { data } from 'react-router-dom';
 
 
 
@@ -20,19 +21,19 @@ export const useDailyClickUrl = () => {
               withCredentials: true
             });
 
-            const data = response.data;
+            const dailyAnalyticsData = response.data.analytics;
     
-            console.log('Setting daily click:', data.data);
+            console.log('Setting daily click:', dailyAnalyticsData);
+
+            setDailyClick(dailyAnalyticsData);
 
 
-            if(!data.success){
-                setError(data.message);
+            if(!response.success){
+                setError('No getting data of indivisual url');
                 return;
             }
-    
-            setDailyClick(data.data);
             setError('');
-            return data.data;
+            return data;
         } catch (error) {
             console.error("Axios error:", error);
             const message = error?.response?.data?.message || "Failed to get daily click";
