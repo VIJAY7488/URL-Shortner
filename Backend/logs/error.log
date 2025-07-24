@@ -1,0 +1,229 @@
+{"level":"error","message":"Validation Error: \"password\" length must be at least 6 characters long","timestamp":"2025-07-04T07:58:43.427Z"}
+{"level":"error","message":"User with email test0@gmail.com already exists","timestamp":"2025-07-04T07:58:58.607Z"}
+{"level":"error","message":"Validation Error: \"email\" is required","timestamp":"2025-07-04T07:59:05.885Z"}
+{"level":"error","message":"Validation Error: \"name\" is required","timestamp":"2025-07-04T07:59:19.339Z"}
+{"level":"error","message":"User with email test0@gmail.com already exists","timestamp":"2025-07-04T07:59:27.651Z"}
+{"level":"error","message":"Validation Error: \"email\" is required","timestamp":"2025-07-04T12:10:15.835Z"}
+{"level":"error","message":"Validation Error: \"name\" is required","timestamp":"2025-07-04T12:11:03.677Z"}
+{"level":"error","message":"Validation Error: \"name\" is required","timestamp":"2025-07-04T12:11:59.062Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-04T12:14:46.654Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T15:10:43.795Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T15:12:17.207Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T15:13:48.132Z"}
+{"level":"error","message":"Validation Error: \"email\" must be a valid email","timestamp":"2025-07-04T16:28:51.417Z"}
+{"level":"error","message":"Validation Error: \"email\" must be a valid email","timestamp":"2025-07-04T16:32:56.764Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-04T17:59:18.630Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:44:09.406Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:46:06.903Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:54:24.363Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:54:35.875Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:55:13.611Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:55:35.568Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:55:38.425Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T18:55:39.585Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-04T19:04:07.414Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-04T19:13:34.878Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-04T19:14:50.442Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:24:44.096Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:26:07.108Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:26:34.094Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:27:24.099Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:27:55.173Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:28:32.289Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:29:04.013Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T19:29:04.035Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-04T19:29:17.162Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:29:22.931Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T19:29:22.962Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:29:49.197Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T19:29:49.214Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:55:16.101Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T19:55:16.107Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T19:55:50.925Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T19:55:50.975Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T20:05:44.362Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T20:05:44.420Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T20:12:56.211Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T20:12:56.252Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T20:14:33.619Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T20:14:33.669Z"}
+{"level":"error","message":"User with email test03@gmail.com already exists","timestamp":"2025-07-04T20:29:31.908Z"}
+{"level":"error","message":"User with email test04@gmail.com already exists","timestamp":"2025-07-04T20:30:33.089Z"}
+{"level":"error","message":"User with email test04@gmail.com already exists","timestamp":"2025-07-04T20:30:34.146Z"}
+{"level":"error","message":"User with email test04@gmail.com already exists","timestamp":"2025-07-04T20:30:34.653Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T20:32:34.732Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T20:32:34.793Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T20:33:27.727Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T20:33:27.734Z"}
+{"level":"error","message":"User with email test06@gmail.com already exists","timestamp":"2025-07-04T20:33:45.328Z"}
+{"level":"error","message":"User with email test06@gmail.com already exists","timestamp":"2025-07-04T20:33:50.264Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-04T20:34:05.693Z"}
+{"level":"error","message":"No refresh token provided","timestamp":"2025-07-04T20:34:05.705Z"}
+{"level":"error","message":"User with email test07@gmail.com already exists","timestamp":"2025-07-04T20:36:48.346Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-05T04:15:30.917Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-05T09:56:50.501Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-09T04:20:57.344Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-09T04:42:47.702Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-09T04:44:56.990Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T06:46:42.855Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T06:46:55.301Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T06:47:06.541Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T06:48:53.219Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T06:49:18.913Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T06:59:39.054Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:00:00.480Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:07:01.533Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:07:04.363Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:07:05.361Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:07:06.306Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:07:07.145Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:07:08.600Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:13:33.536Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:13:34.358Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:13:34.636Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:13:35.253Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:13:35.675Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:16:26.088Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:16:48.428Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:16:49.245Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:16:49.700Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:16:49.932Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:16:50.084Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:16:50.236Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" is not allowed to be empty","timestamp":"2025-07-11T07:36:33.143Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" is not allowed to be empty","timestamp":"2025-07-11T07:36:33.858Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" is not allowed to be empty","timestamp":"2025-07-11T07:36:34.658Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" is not allowed to be empty","timestamp":"2025-07-11T07:50:07.818Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" is not allowed to be empty","timestamp":"2025-07-11T07:50:08.445Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" is not allowed to be empty","timestamp":"2025-07-11T07:50:08.621Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" is not allowed to be empty","timestamp":"2025-07-11T07:50:08.989Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:50:12.431Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:50:14.253Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:50:14.860Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-11T07:51:14.573Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-11T11:28:30.894Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-11T11:39:55.830Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-12T07:39:01.975Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-13T04:44:19.249Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-13T05:54:38.191Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-13T07:37:48.596Z"}
+{"level":"error","message":"Validation Error: \"longUrl\" must be a valid uri","timestamp":"2025-07-13T07:38:37.663Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-14T07:53:11.942Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-15T04:46:10.430Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-15T04:52:38.188Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-15T04:58:04.468Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-15T04:58:36.773Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-15T04:58:38.655Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-15T09:13:51.290Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-15T10:21:33.324Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-15T10:21:41.097Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-15T10:35:10.035Z"}
+{"level":"error","message":"Validation Error: \"password\" is not allowed to be empty","timestamp":"2025-07-15T10:48:13.487Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-15T11:26:31.213Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-15T11:26:54.528Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-16T10:01:14.569Z"}
+{"level":"error","message":"Short Url is is missing undefined","timestamp":"2025-07-16T10:04:10.457Z"}
+{"level":"error","message":"Short Url is is missing 687660bab8b2d6fb28208493","timestamp":"2025-07-16T10:04:34.976Z"}
+{"level":"error","message":"Short Url is is missing 687660bab8b2d6fb28208493","timestamp":"2025-07-16T10:04:59.982Z"}
+{"level":"error","message":"Short Url is is missing undefined","timestamp":"2025-07-16T10:09:37.894Z"}
+{"level":"error","message":"Short Url is missing undefined","timestamp":"2025-07-16T10:17:09.879Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-17T14:28:29.484Z"}
+{"level":"error","message":"Short Url is missing undefined","timestamp":"2025-07-17T14:28:57.675Z"}
+{"level":"error","message":"Short Url is missing 687660bab8b2d6fb28208493","timestamp":"2025-07-17T14:29:53.503Z"}
+{"level":"error","message":"Short Url is missing 687660bab8b2d6fb28208493","timestamp":"2025-07-17T14:34:53.992Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-17T14:40:49.488Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-17T14:41:40.079Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-17T17:51:04.532Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-19T06:11:58.741Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-19T06:54:32.954Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-19T07:31:42.982Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-19T07:31:52.479Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-19T07:32:48.749Z"}
+{"level":"error","message":"No token, authorization denied","timestamp":"2025-07-19T07:34:12.380Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-19T07:59:34.673Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-19T08:01:21.537Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-19T14:49:55.101Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-19T14:50:56.262Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-19T18:41:30.162Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T04:57:01.144Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T04:59:26.978Z"}
+{"level":"error","message":"Validation Error: \"password\" length must be at least 6 characters long","timestamp":"2025-07-20T06:29:03.811Z"}
+{"level":"error","message":"Validation Error: \"email\" is not allowed to be empty","timestamp":"2025-07-20T13:08:22.855Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T13:47:38.483Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T13:50:05.272Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T14:34:19.908Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T14:34:37.092Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-20T17:07:57.195Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-20T18:03:40.033Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-20T18:03:47.171Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-20T18:03:54.658Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-20T18:03:55.668Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-20T18:03:56.456Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-20T18:06:38.222Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:24:06.355Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:24:10.943Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:29:43.553Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:29:47.628Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:29:53.154Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:29:58.824Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:30:00.568Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:30:46.132Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:30:51.376Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:30:56.754Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:00.804Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:21.452Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:27.132Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:32.034Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:35.926Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:39.888Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:43.519Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:46.966Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:50.331Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:53.834Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:31:57.545Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-20T20:36:39.942Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-21T16:59:23.891Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-21T17:02:27.945Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-21T17:07:22.141Z"}
+{"level":"error","message":"No token or invalid authorization header format","timestamp":"2025-07-21T20:00:23.744Z"}
+{"level":"error","message":"Url id not found","timestamp":"2025-07-21T20:01:18.638Z"}
+{"level":"error","message":"Url id not found","timestamp":"2025-07-21T20:02:14.237Z"}
+{"level":"error","message":"Url id not found","timestamp":"2025-07-21T20:04:05.071Z"}
+{"level":"error","message":"Url id not found undefined","timestamp":"2025-07-21T20:04:47.267Z"}
+{"level":"error","message":"No token or invalid authorization header format","timestamp":"2025-07-21T20:21:19.257Z"}
+{"level":"error","message":"No token or invalid authorization header format","timestamp":"2025-07-21T20:21:33.748Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-21T21:06:07.679Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-22T10:27:53.388Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687b3743eb4bd1fea4eec961'), date: null }","index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687b3743eb4bd1fea4eec961"}},"index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687b3743eb4bd1fea4eec961"},"level":"error","message":"Error incrementing click: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687b3743eb4bd1fea4eec961'), date: null }","stack":"MongoServerError: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687b3743eb4bd1fea4eec961'), date: null }\n    at InsertOneOperation.execute (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/insert.ts:88:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async tryOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:283:14)\n    at async executeOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:115:12)\n    at async Collection.insertOne (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/collection.ts:285:12)","timestamp":"2025-07-22T12:21:27.437Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687b3743eb4bd1fea4eec961'), date: null }","index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687b3743eb4bd1fea4eec961"}},"index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687b3743eb4bd1fea4eec961"},"level":"error","message":"Error tracking click for undefined: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687b3743eb4bd1fea4eec961'), date: null }","stack":"MongoServerError: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687b3743eb4bd1fea4eec961'), date: null }\n    at InsertOneOperation.execute (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/insert.ts:88:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async tryOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:283:14)\n    at async executeOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:115:12)\n    at async Collection.insertOne (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/collection.ts:285:12)","timestamp":"2025-07-22T12:21:27.438Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"}},"index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"},"level":"error","message":"Error incrementing click: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","stack":"MongoServerError: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }\n    at InsertOneOperation.execute (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/insert.ts:88:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async tryOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:283:14)\n    at async executeOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:115:12)\n    at async Collection.insertOne (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/collection.ts:285:12)","timestamp":"2025-07-22T14:03:29.841Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"}},"index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"},"level":"error","message":"Error tracking click for AiZ1voa: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","stack":"MongoServerError: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }\n    at InsertOneOperation.execute (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/insert.ts:88:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async tryOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:283:14)\n    at async executeOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:115:12)\n    at async Collection.insertOne (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/collection.ts:285:12)","timestamp":"2025-07-22T14:03:29.842Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"}},"index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"},"level":"error","message":"Error incrementing click: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","stack":"MongoServerError: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }\n    at InsertOneOperation.execute (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/insert.ts:88:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async tryOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:283:14)\n    at async executeOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:115:12)\n    at async Collection.insertOne (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/collection.ts:285:12)","timestamp":"2025-07-22T14:09:15.738Z"}
+{"code":11000,"errorLabelSet":{},"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"}},"index":0,"keyPattern":{"date":1,"shortUrl":1},"keyValue":{"date":null,"shortUrl":"687f7f9cf45bb17a662f90ca"},"level":"error","message":"Error tracking click for AiZ1voa: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }","stack":"MongoServerError: E11000 duplicate key error collection: test.clicks index: shortUrl_1_date_1 dup key: { shortUrl: ObjectId('687f7f9cf45bb17a662f90ca'), date: null }\n    at InsertOneOperation.execute (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/insert.ts:88:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async tryOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:283:14)\n    at async executeOperation (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/operations/execute_operation.ts:115:12)\n    at async Collection.insertOne (/home/vijay/URL-Shortner/Backend/node_modules/mongodb/src/collection.ts:285:12)","timestamp":"2025-07-22T14:09:15.739Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-22T17:50:53.812Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-22T18:28:30.495Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-22T18:33:59.863Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-22T20:27:20.449Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-22T21:01:08.063Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T09:42:05.568Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T09:59:46.948Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-23T09:59:55.668Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T13:45:15.892Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T13:45:37.608Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T13:45:44.761Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T13:56:31.549Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-23T17:48:41.705Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T18:21:38.505Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-23T18:35:17.979Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-23T19:32:41.571Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-23T19:48:01.257Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-23T20:16:46.951Z"}
+{"_message":"Click validation failed","errors":{"count":{"kind":"min","message":"Path `count` (0) is less than minimum allowed value (1).","name":"ValidatorError","path":"count","properties":{"fullPath":"count","message":"Path `count` (0) is less than minimum allowed value (1).","min":1,"path":"count","type":"min","value":0},"value":0}},"level":"error","message":"Error incrementing click: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).","stack":"ValidationError: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).\n    at Document.invalidate (/home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3343:32)\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3104:17\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/schemaType.js:1407:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)","timestamp":"2025-07-23T20:36:01.166Z"}
+{"_message":"Click validation failed","errors":{"count":{"kind":"min","message":"Path `count` (0) is less than minimum allowed value (1).","name":"ValidatorError","path":"count","properties":{"fullPath":"count","message":"Path `count` (0) is less than minimum allowed value (1).","min":1,"path":"count","type":"min","value":0},"value":0}},"level":"error","message":"Error tracking click for lovable: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).","stack":"ValidationError: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).\n    at Document.invalidate (/home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3343:32)\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3104:17\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/schemaType.js:1407:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)","timestamp":"2025-07-23T20:36:01.169Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-24T07:40:57.195Z"}
+{"_message":"Click validation failed","errors":{"count":{"kind":"min","message":"Path `count` (0) is less than minimum allowed value (1).","name":"ValidatorError","path":"count","properties":{"fullPath":"count","message":"Path `count` (0) is less than minimum allowed value (1).","min":1,"path":"count","type":"min","value":0},"value":0}},"level":"error","message":"Error incrementing click: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).","stack":"ValidationError: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).\n    at Document.invalidate (/home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3343:32)\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3104:17\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/schemaType.js:1407:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)","timestamp":"2025-07-24T10:53:34.855Z"}
+{"_message":"Click validation failed","errors":{"count":{"kind":"min","message":"Path `count` (0) is less than minimum allowed value (1).","name":"ValidatorError","path":"count","properties":{"fullPath":"count","message":"Path `count` (0) is less than minimum allowed value (1).","min":1,"path":"count","type":"min","value":0},"value":0}},"level":"error","message":"Error tracking click for lovable: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).","stack":"ValidationError: Click validation failed: count: Path `count` (0) is less than minimum allowed value (1).\n    at Document.invalidate (/home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3343:32)\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/document.js:3104:17\n    at /home/vijay/URL-Shortner/Backend/node_modules/mongoose/lib/schemaType.js:1407:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)","timestamp":"2025-07-24T10:53:34.856Z"}
+{"level":"error","message":"Invalid password or email","timestamp":"2025-07-24T13:29:54.638Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-24T19:54:43.790Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-24T19:55:15.921Z"}
+{"level":"error","message":"Token is not valid","timestamp":"2025-07-24T19:55:40.754Z"}
