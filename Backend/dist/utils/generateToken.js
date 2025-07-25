@@ -1,9 +1,17 @@
-import jwt from 'jsonwebtoken';
-export const generateAccessToken = (userId) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateRefreshToken = exports.generateAccessToken = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const generateAccessToken = (userId) => {
     const secret = process.env.ACCESS_TOKEN;
-    return jwt.sign({ userId: userId }, secret, { expiresIn: '6h' });
+    return jsonwebtoken_1.default.sign({ userId: userId }, secret, { expiresIn: '6h' });
 };
-export const generateRefreshToken = (userId) => {
+exports.generateAccessToken = generateAccessToken;
+const generateRefreshToken = (userId) => {
     const secret = process.env.REFRESH_TOKEN;
-    return jwt.sign({ userId: userId }, secret, { expiresIn: '7d' });
+    return jsonwebtoken_1.default.sign({ userId: userId }, secret, { expiresIn: '7d' });
 };
+exports.generateRefreshToken = generateRefreshToken;

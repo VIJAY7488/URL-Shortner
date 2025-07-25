@@ -1,10 +1,16 @@
-import { UAParser } from 'ua-parser-js';
-import geoip from 'geoip-lite';
-import logger from './logger';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.extractClickData = void 0;
+const ua_parser_js_1 = require("ua-parser-js");
+const geoip_lite_1 = __importDefault(require("geoip-lite"));
+const logger_1 = __importDefault(require("./logger"));
 // Extract comprehensive data from request
-export const extractClickData = (req) => {
+const extractClickData = (req) => {
     const userAgent = req.get('User-Agent') || '';
-    const parser = new UAParser(userAgent);
+    const parser = new ua_parser_js_1.UAParser(userAgent);
     const result = parser.getResult();
     // Enhanced IP extraction with validation
     const getClientIP = (req) => {
@@ -16,14 +22,14 @@ export const extractClickData = (req) => {
             'True-Client-IP'
         ];
         console.log('🟦 Full IP Header Dump:');
-        logger.info('Full IP Header Dump:');
+        logger_1.default.info('Full IP Header Dump:');
         headersToCheck.forEach(header => {
             console.log(`${header}:`, req.get(header));
         });
         console.log('req.ip:', req.ip);
-        logger.info('req.ip:', req.ip);
+        logger_1.default.info('req.ip:', req.ip);
         console.log('req.socket.remoteAddress:', req.socket?.remoteAddress);
-        logger.info('req.socket.remoteAddress:', req.socket?.remoteAddress);
+        logger_1.default.info('req.socket.remoteAddress:', req.socket?.remoteAddress);
         for (const header of headersToCheck) {
             const value = req.get(header);
             if (value) {
@@ -76,8 +82,8 @@ export const extractClickData = (req) => {
     };
     const ip = getClientIP(req);
     console.log('Extracted IP:', ip); // Debug log
-    logger.info('Extracted IP:', ip);
-    const geo = ip ? geoip.lookup(ip) : null;
+    logger_1.default.info('Extracted IP:', ip);
+    const geo = ip ? geoip_lite_1.default.lookup(ip) : null;
     console.log('Geo data:', geo); // Debug log
     // Bot detection
     const botPatterns = [
@@ -110,3 +116,4 @@ export const extractClickData = (req) => {
     console.log('Final tracking data:', trackingData); // Debug log
     return trackingData;
 };
+exports.extractClickData = extractClickData;

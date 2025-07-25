@@ -1,5 +1,8 @@
-import { AuthFailureResponse, AccessTokenErrorResponse, InternalErrorResponse, NotFoundResponse, BadRequestResponse, ForbiddenResponse, } from './apiResponse';
-export var ErrorType;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConflictError = exports.AccessTokenError = exports.NoDataError = exports.TokenExpiredError = exports.BadTokenError = exports.NoEntryError = exports.ForbiddenError = exports.NotFoundError = exports.BadRequestError = exports.InternalError = exports.AuthFailureError = exports.ApiError = exports.ErrorType = void 0;
+const apiResponse_1 = require("./apiResponse");
+var ErrorType;
 (function (ErrorType) {
     ErrorType["BAD_TOKEN"] = "BadTokenError";
     ErrorType["TOKEN_EXPIRED"] = "TokenExpiredError";
@@ -12,8 +15,8 @@ export var ErrorType;
     ErrorType["BAD_REQUEST"] = "BadRequestError";
     ErrorType["FORBIDDEN"] = "ForbiddenError";
     ErrorType["Conflict"] = "ConflictError";
-})(ErrorType || (ErrorType = {}));
-export class ApiError extends Error {
+})(ErrorType || (exports.ErrorType = ErrorType = {}));
+class ApiError extends Error {
     constructor(type, message = 'error') {
         super(type);
         this.type = type;
@@ -24,78 +27,90 @@ export class ApiError extends Error {
             case ErrorType.BAD_TOKEN:
             case ErrorType.TOKEN_EXPIRED:
             case ErrorType.UNAUTHORIZED:
-                return new AuthFailureResponse(err.message).send(res);
+                return new apiResponse_1.AuthFailureResponse(err.message).send(res);
             case ErrorType.ACCESS_TOKEN:
-                return new AccessTokenErrorResponse(err.message).send(res);
+                return new apiResponse_1.AccessTokenErrorResponse(err.message).send(res);
             case ErrorType.INTERNAL:
-                return new InternalErrorResponse(err.message).send(res);
+                return new apiResponse_1.InternalErrorResponse(err.message).send(res);
             case ErrorType.NOT_FOUND:
             case ErrorType.NO_ENTRY:
             case ErrorType.NO_DATA:
-                return new NotFoundResponse(err.message).send(res);
+                return new apiResponse_1.NotFoundResponse(err.message).send(res);
             case ErrorType.BAD_REQUEST:
-                return new BadRequestResponse(err.message).send(res);
+                return new apiResponse_1.BadRequestResponse(err.message).send(res);
             case ErrorType.FORBIDDEN:
-                return new ForbiddenResponse(err.message).send(res);
+                return new apiResponse_1.ForbiddenResponse(err.message).send(res);
             default: {
                 let message = err.message;
-                return new InternalErrorResponse(message).send(res);
+                return new apiResponse_1.InternalErrorResponse(message).send(res);
             }
         }
     }
 }
-export class AuthFailureError extends ApiError {
+exports.ApiError = ApiError;
+class AuthFailureError extends ApiError {
     constructor(message = 'Invalid Credentials') {
         super(ErrorType.UNAUTHORIZED, message);
     }
 }
-export class InternalError extends ApiError {
+exports.AuthFailureError = AuthFailureError;
+class InternalError extends ApiError {
     constructor(message = 'Internal error') {
         super(ErrorType.INTERNAL, message);
     }
 }
-export class BadRequestError extends ApiError {
+exports.InternalError = InternalError;
+class BadRequestError extends ApiError {
     constructor(message = 'Bad Request') {
         super(ErrorType.BAD_REQUEST, message);
     }
 }
-export class NotFoundError extends ApiError {
+exports.BadRequestError = BadRequestError;
+class NotFoundError extends ApiError {
     constructor(message = 'Not Found') {
         super(ErrorType.NOT_FOUND, message);
     }
 }
-export class ForbiddenError extends ApiError {
+exports.NotFoundError = NotFoundError;
+class ForbiddenError extends ApiError {
     constructor(message = 'Permission denied') {
         super(ErrorType.FORBIDDEN, message);
     }
 }
-export class NoEntryError extends ApiError {
+exports.ForbiddenError = ForbiddenError;
+class NoEntryError extends ApiError {
     constructor(message = "Entry don't exists") {
         super(ErrorType.NO_ENTRY, message);
     }
 }
-export class BadTokenError extends ApiError {
+exports.NoEntryError = NoEntryError;
+class BadTokenError extends ApiError {
     constructor(message = 'Token is not valid') {
         super(ErrorType.BAD_TOKEN, message);
     }
 }
-export class TokenExpiredError extends ApiError {
+exports.BadTokenError = BadTokenError;
+class TokenExpiredError extends ApiError {
     constructor(message = 'Token is expired') {
         super(ErrorType.TOKEN_EXPIRED, message);
     }
 }
-export class NoDataError extends ApiError {
+exports.TokenExpiredError = TokenExpiredError;
+class NoDataError extends ApiError {
     constructor(message = 'No data available') {
         super(ErrorType.NO_DATA, message);
     }
 }
-export class AccessTokenError extends ApiError {
+exports.NoDataError = NoDataError;
+class AccessTokenError extends ApiError {
     constructor(message = 'Invalid access token') {
         super(ErrorType.ACCESS_TOKEN, message);
     }
 }
-export class ConflictError extends ApiError {
+exports.AccessTokenError = AccessTokenError;
+class ConflictError extends ApiError {
     constructor(message = 'Already exist') {
         super(ErrorType.Conflict, message);
     }
 }
+exports.ConflictError = ConflictError;

@@ -1,11 +1,46 @@
-import mongoose, { Schema } from "mongoose";
-const urlSchema = new Schema({
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importStar(require("mongoose"));
+const urlSchema = new mongoose_1.Schema({
     title: {
         type: String,
         trim: true
     },
     longUrl: {
-        type: Schema.Types.String,
+        type: mongoose_1.Schema.Types.String,
         required: true,
         trim: true
     },
@@ -13,22 +48,22 @@ const urlSchema = new Schema({
         type: String
     },
     shortUrl: {
-        type: Schema.Types.String,
+        type: mongoose_1.Schema.Types.String,
         required: true
     },
     qrcode: {
-        type: Schema.Types.String
+        type: mongoose_1.Schema.Types.String
     },
     user: {
-        type: Schema.ObjectId,
+        type: mongoose_1.Schema.ObjectId,
         ref: 'User'
     },
     customUrl: {
-        type: Schema.Types.String,
+        type: mongoose_1.Schema.Types.String,
         sparse: true,
     },
     singleUse: {
-        type: Schema.Types.Boolean,
+        type: mongoose_1.Schema.Types.Boolean,
         default: false
     },
     passwordForUrl: {
@@ -36,11 +71,11 @@ const urlSchema = new Schema({
         select: false
     },
     expireAt: {
-        type: Schema.Types.Date,
+        type: mongoose_1.Schema.Types.Date,
         index: { expires: 0 }
     },
     isActive: {
-        type: Schema.Types.Boolean,
+        type: mongoose_1.Schema.Types.Boolean,
         default: true
     },
     totalClicks: {
@@ -50,5 +85,5 @@ const urlSchema = new Schema({
 }, { timestamps: true });
 urlSchema.index({ shortUrl: 1 }, { unique: true });
 urlSchema.index({ user: 1 });
-const Url = mongoose.model('Url', urlSchema);
-export default Url;
+const Url = mongoose_1.default.model('Url', urlSchema);
+exports.default = Url;
