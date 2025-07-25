@@ -1,13 +1,13 @@
 import express from 'express';
 import { config } from 'dotenv';
-import logger from './src/utils/logger';
-import connectDB from './src/config/dbConnection';
-import authRoutes from './src/routes/authRoutes';
-import configureCors from './src/config/corsConfig';
+import logger from './utils/logger';
+import connectDB from './config/dbConnection';
+import authRoutes from './routes/authRoutes';
+import configureCors from './config/corsConfig';
 import cookieParser from 'cookie-parser';
-import urlRoutes from './src/routes/urlRoutes';
-import redirectUrlRoutes from './src/routes/redirectRoutes'
-import analyticsRoutes from './src/routes/analyticsRoute';
+import urlRoutes from './routes/urlRoutes.js';
+import redirectUrlRoutes from './routes/redirectRoutes'
+import analyticsRoutes from './routes/analyticsRoute';
 
 const app = express();
 // Load environment variables
@@ -31,7 +31,13 @@ app.use('/', redirectUrlRoutes);
 
 
 //Server Listening
-app.listen(PORT, () => {
-    connectDB();
-  logger.info(`Server is running on port ${PORT}`);
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      logger.info(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err: any) => {
+    logger.error("Failed to connect to DB", err);
 });
+

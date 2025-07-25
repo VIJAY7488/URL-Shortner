@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Url from '../models/urlModel';
 import wrapAsyncFunction from '../utils/tryCatchWrapper';
 import logger from '../utils/logger';
-import errorHandler from '../utils/apiResponse';
+import { NotFoundError } from '../utils/apiError';
 
 
 export const redirectPublicUrlToLongUrl = wrapAsyncFunction(async(req: Request, res: Response) => {
@@ -11,7 +11,7 @@ export const redirectPublicUrlToLongUrl = wrapAsyncFunction(async(req: Request, 
     const shortCode = req.params.shortUrl?.trim();
 
     if(!shortCode){
-        throw new errorHandler.NotFoundError('Short URL does not get');
+        throw new NotFoundError('Short URL does not get');
     };
 
     const urlDoc = await Url.findOne({
@@ -23,7 +23,7 @@ export const redirectPublicUrlToLongUrl = wrapAsyncFunction(async(req: Request, 
     
     if (!urlDoc) {
         logger.warn(`Short URL not found: ${shortCode}`);
-        throw new errorHandler.NotFoundError('Short URL not found');
+        throw new NotFoundError('Short URL not found');
     }
 
     logger.info(`Redirecting: ${shortCode} → ${urlDoc.longUrl}`);

@@ -7206,3 +7206,13 @@
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-24T21:31:42.266Z"}
 {"level":"info","message":"Server is running on port 3001","timestamp":"2025-07-24T21:51:53.130Z"}
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-24T21:51:53.710Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-07-25T06:37:08.175Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-25T06:37:09.423Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-07-25T06:45:15.392Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-25T06:45:17.174Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-07-25T06:50:14.738Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-25T06:50:15.598Z"}
+{"level":"info","message":"Login endpoint hit","timestamp":"2025-07-25T06:50:34.123Z"}
+{"level":"info","message":"Login successful","timestamp":"2025-07-25T06:50:34.238Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-07-25T07:01:52.945Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-25T07:01:53.611Z"}
