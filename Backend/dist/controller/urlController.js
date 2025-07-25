@@ -1,17 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUrl = exports.getAllUserUrl = exports.userShortenUrl = exports.publicShortenUrl = void 0;
-const nanoid_1 = require("nanoid");
-const urlModel_1 = __importDefault(require("../models/urlModel"));
-const tryCatchWrapper_1 = __importDefault(require("../utils/tryCatchWrapper"));
-const logger_1 = __importDefault(require("../utils/logger"));
-const qrcode_1 = __importDefault(require("qrcode"));
-const validator_1 = require("../utils/validator");
-const _calculateUrlExpiry_1 = require("../utils/ calculateUrlExpiry");
-const apiError_1 = require("../utils/apiError");
+import { nanoid } from "nanoid";
+import Url from "../models/urlModel";
+import wrapAsyncFunction from "../utils/tryCatchWrapper";
+import logger from "../utils/logger";
+import QRCode from 'qrcode';
+import { validateUrl } from "../utils/validator";
+import { calculateUrlExpiry } from "../utils/ calculateUrlExpiry";
+import { AuthFailureError, BadRequestError, ConflictError, NotFoundError } from "../utils/apiError";
 // =====================================================
 // UTILITY FUNCTIONS
 // =====================================================
@@ -23,7 +17,7 @@ const generateShortCode = (customUrl, alias) => {
         return customUrl;
     }
     else {
-        const nanoCode = (0, nanoid_1.nanoid)(7);
+        const nanoCode = nanoid(7);
         return nanoCode; // Just the code, not the full URL
     }
 };
@@ -32,7 +26,7 @@ const buildFullUrl = (shortCode) => {
 };
 const generateQRCode = async (url) => {
     try {
-        return await qrcode_1.default.toDataURL(url, {
+        return await QRCode.toDataURL(url, {
             width: 256,
             margin: 2,
             color: {
@@ -42,28 +36,28 @@ const generateQRCode = async (url) => {
         });
     }
     catch (error) {
-        logger_1.default.error('QR Code generation failed:', error);
-        throw new apiError_1.BadRequestError('Failed to generate QR code');
+        logger.error('QR Code generation failed:', error);
+        throw new BadRequestError('Failed to generate QR code');
     }
 };
 // =====================================================
 // PUBLIC URL SHORTENING
 // =====================================================
-exports.publicShortenUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
-    logger_1.default.info('public shorten url endpoint hit');
-    const { error } = (0, validator_1.validateUrl)(req.body);
+export const publicShortenUrl = wrapAsyncFunction(async (req, res) => {
+    logger.info('public shorten url endpoint hit');
+    const { error } = validateUrl(req.body);
     if (error) {
-        logger_1.default.error(`Validation Error: ${error.details[0].message}`);
+        logger.error(`Validation Error: ${error.details[0].message}`);
         return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const { longUrl } = req.body;
     if (!longUrl) {
-        throw new apiError_1.BadRequestError('"longUrl is required"');
+        throw new BadRequestError('"longUrl is required"');
     }
     // Rate limiting: Check how many times this longUrl has been shortened
-    const urlCount = await urlModel_1.default.countDocuments({ longUrl });
+    const urlCount = await Url.countDocuments({ longUrl });
     if (urlCount >= 5) {
-        logger_1.default.warn(`Rate limit hit for longUrl: ${longUrl}`);
+        logger.warn(`Rate limit hit for longUrl: ${longUrl}`);
         return res.status(429).json({
             success: false,
             message: 'Rate limit exceeded: Cannot shorten the same URL more than 5 times.',
@@ -73,12 +67,12 @@ exports.publicShortenUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
     const shortCode = generateShortCode();
     const fullShortUrl = buildFullUrl(shortCode);
     const qrCode = await generateQRCode(fullShortUrl);
-    const newUrl = await urlModel_1.default.create({
+    const newUrl = await Url.create({
         longUrl,
         shortUrl: fullShortUrl,
         qrcode: qrCode
     });
-    logger_1.default.info(`Public short URL created: ${shortCode}`);
+    logger.info(`Public short URL created: ${shortCode}`);
     res.status(201).json({
         success: true,
         data: {
@@ -92,25 +86,25 @@ exports.publicShortenUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
 // =====================================================
 // USER URL SHORTENING (AUTHENTICATED)
 // =====================================================
-exports.userShortenUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
-    logger_1.default.info('user shorten url endpoint hit');
+export const userShortenUrl = wrapAsyncFunction(async (req, res) => {
+    logger.info('user shorten url endpoint hit');
     const { title, longUrl, customUrl, expireAt, passwordProtected, passwordForUrl, singleUse, } = req.body;
     if (!longUrl) {
-        throw new apiError_1.BadRequestError('longUrl is required');
+        throw new BadRequestError('longUrl is required');
     }
     const userId = req.user?.userId;
     if (!userId) {
-        throw new apiError_1.AuthFailureError('Unauthorized: userId missing');
+        throw new AuthFailureError('Unauthorized: userId missing');
     }
     // Validation for URL format
-    const { error } = (0, validator_1.validateUrl)(longUrl);
+    const { error } = validateUrl(longUrl);
     if (error) {
-        throw new apiError_1.BadRequestError(error.details[0].message);
+        throw new BadRequestError(error.details[0].message);
     }
     // Check if user has already shortened this URL
-    const existingUrl = await urlModel_1.default.findOne({ longUrl, user: userId });
+    const existingUrl = await Url.findOne({ longUrl, user: userId });
     if (existingUrl) {
-        logger_1.default.info('User already has this URL shortened');
+        logger.info('User already has this URL shortened');
         return res.status(200).json({
             success: true,
             message: 'URL already shortened by this user',
@@ -120,16 +114,16 @@ exports.userShortenUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
     // Check if custom alias is already taken
     if (customUrl) {
         const customCode = generateShortCode(customUrl);
-        const existingCustom = await urlModel_1.default.findOne({ shortCode: customCode });
+        const existingCustom = await Url.findOne({ shortCode: customCode });
         if (existingCustom) {
-            throw new apiError_1.ConflictError('Custom URL/alias is already taken');
+            throw new ConflictError('Custom URL/alias is already taken');
         }
     }
     // Generate URLs and QR code
     const shortCode = generateShortCode(customUrl);
     const fullShortUrl = buildFullUrl(shortCode);
     const qrCode = await generateQRCode(fullShortUrl);
-    const expireDate = expireAt ? (0, _calculateUrlExpiry_1.calculateUrlExpiry)(expireAt) : null;
+    const expireDate = expireAt ? calculateUrlExpiry(expireAt) : null;
     // Create new URL document
     const urlData = {
         title,
@@ -143,8 +137,8 @@ exports.userShortenUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
         passwordForUrl,
         isActive: true
     };
-    const newUrl = await urlModel_1.default.create(urlData);
-    logger_1.default.info(`User short URL created: ${shortCode} for user: ${userId}`);
+    const newUrl = await Url.create(urlData);
+    logger.info(`User short URL created: ${shortCode} for user: ${userId}`);
     res.status(201).json({
         success: true,
         message: 'URL shortened successfully',
@@ -163,12 +157,12 @@ exports.userShortenUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
 // =====================================================
 // GET ALL USER URLS (WITH PAGINATION)
 // =====================================================
-exports.getAllUserUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
-    logger_1.default.info('Get all user URLs endpoint hit');
+export const getAllUserUrl = wrapAsyncFunction(async (req, res) => {
+    logger.info('Get all user URLs endpoint hit');
     const userId = req.user?.userId;
-    logger_1.default.info(`userId: ${userId}`);
+    logger.info(`userId: ${userId}`);
     if (!userId) {
-        throw new apiError_1.AuthFailureError('Unauthorized: userId missing');
+        throw new AuthFailureError('Unauthorized: userId missing');
     }
     // Pagination parameters
     const page = parseInt(req.query.page) || 1;
@@ -203,19 +197,19 @@ exports.getAllUserUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
     }
     // Execute queries in parallel
     const [urls, totalCount] = await Promise.all([
-        urlModel_1.default.find(query)
+        Url.find(query)
             .sort({ [sortBy]: sortOrder })
             .skip(skip)
             .limit(limit)
             .select('title longUrl user shortUrl shortCode totalClicks createdAt expireAt isActive singleUse')
             .lean(),
-        urlModel_1.default.countDocuments(query)
+        Url.countDocuments(query)
     ]);
     // Calculate pagination info
     const totalPages = Math.ceil(totalCount / limit);
     const hasNextPage = page < totalPages;
     const hasPrevPage = page > 1;
-    logger_1.default.info(`Retrieved ${urls.length} URLs for user ${userId}`);
+    logger.info(`Retrieved ${urls.length} URLs for user ${userId}`);
     res.status(200).json({
         success: true,
         data: {
@@ -234,23 +228,23 @@ exports.getAllUserUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
 // =====================================================
 // DELETE URL
 // =====================================================
-exports.deleteUrl = (0, tryCatchWrapper_1.default)(async (req, res) => {
-    logger_1.default.info('Delete URL endpoint hit');
+export const deleteUrl = wrapAsyncFunction(async (req, res) => {
+    logger.info('Delete URL endpoint hit');
     const { urlId } = req.params;
     if (!urlId) {
-        logger_1.default.error('URL id not found in params');
+        logger.error('URL id not found in params');
         return res.status(400).json({
             success: false,
             message: 'URL id is required',
         });
     }
-    const deletedUrl = await urlModel_1.default.findOneAndDelete({
+    const deletedUrl = await Url.findOneAndDelete({
         _id: urlId,
     });
     if (!deletedUrl) {
-        throw new apiError_1.NotFoundError('URL not found');
+        throw new NotFoundError('URL not found');
     }
-    logger_1.default.info(`URL deleted: ${urlId}`);
+    logger.info(`URL deleted: ${urlId}`);
     res.status(200).json({
         success: true,
         message: 'URL deleted successfully'

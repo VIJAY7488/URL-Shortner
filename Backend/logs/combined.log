@@ -7216,3 +7216,5 @@
 {"level":"info","message":"Login successful","timestamp":"2025-07-25T06:50:34.238Z"}
 {"level":"info","message":"Server is running on port 3001","timestamp":"2025-07-25T07:01:52.945Z"}
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-25T07:01:53.611Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-07-25T08:21:32.595Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-07-25T08:21:32.598Z"}
