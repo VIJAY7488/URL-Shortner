@@ -5,6 +5,7 @@ import { startOfDay, endOfDay, subDays, subMonths } from "date-fns";
 import wrapAsyncFunction from "../utils/tryCatchWrapper";
 import logger from "../utils/logger";
 import crypto from 'crypto';
+import { count } from "console";
 
 // Helper Functions
 const getDateRange = (period: string = '7d') => {
@@ -136,7 +137,8 @@ export const getUrlAnalytics = wrapAsyncFunction(
         osBreakdown,
         countryBreakdown,
         referrerBreakdown,
-        recentClicks
+        recentClicks,
+        individualClickCount
       ] = await Promise.all([
         // Total clicks (excluding bots)
         Click.aggregate([
@@ -157,6 +159,22 @@ export const getUrlAnalytics = wrapAsyncFunction(
           isBot: { $ne: true },
           ipHash: { $exists: true }
         }),
+
+        // Indivisual Url click
+        Click.aggregate([
+          {
+            $match: {
+              shortUrl: shortUrlObjectId,
+              isBot: { $ne: true }
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              totalClicks: { $sum: "$count"}
+            }
+          }
+        ]),
 
         // Daily clicks
         Click.aggregate([
@@ -286,14 +304,21 @@ export const getUrlAnalytics = wrapAsyncFunction(
         })
         .sort({ timestamp: -1 })
         .limit(20)
-        .select('timestamp country city browser deviceType referer')
+        .select('count timestamp country city browser deviceType referer'),
       ]);
 
+
+
       const analytics = {
+
+        
+        // Period-specific analytics
         totalClicks: totalClicks[0]?.total || 0,
         uniqueVisitors: uniqueVisitors.length,
         period,
         dateRange,
+
+        // Breakdowns
         clicksByDate: clicksByDate.map(item => ({
           date: item._id,
           clicks: item.totalClicks
@@ -318,7 +343,10 @@ export const getUrlAnalytics = wrapAsyncFunction(
           referrer: item._id,
           count: item.count
         })),
-        recentClicks: recentClicks
+
+         individualClickCount,
+        // Individual click data
+        recentClicks,
       };
 
       logger.info("Successfully fetched comprehensive analytics");
@@ -332,6 +360,7 @@ export const getUrlAnalytics = wrapAsyncFunction(
     }
   }
 );
+
 
 // Get Total Clicks of a User - FIXED FUNCTION
 export const getTotalClicksOfUser = wrapAsyncFunction(
