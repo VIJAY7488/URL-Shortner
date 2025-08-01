@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const DELETE_URL_API = `${import.meta.env.VITE_API_BASE_URL}/auth/delete-url`;
+const DELETE_URL_API = `${import.meta.env.VITE_API_BASE_URL}/url/delete-url`;
 
 
 export const useDelete = () => {
