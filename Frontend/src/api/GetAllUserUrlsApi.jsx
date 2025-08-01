@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { UrlContext } from "../context/UrlContext";
 
-const GET_ALL_USER_URI = `${import.meta.env.VITE_API_BASE_URL}/auth/get-all-user-url`;
+const GET_ALL_USER_URI = `${import.meta.env.VITE_API_BASE_URL}/url/get-all-user-url`;
 
-export const useUserDetails = () => {
+export const useUserAllUrls = () => {
   const { accessToken } = useContext(AuthContext);
   const { setAllUrls } = useContext(UrlContext);
 
@@ -18,8 +18,8 @@ export const useUserDetails = () => {
         withCredentials: true,
       });
 
-      setAllUrls(response.data.allUrls);
-      return response.data;
+      setAllUrls(response.data.data.urls);
+      return response.data.urls;
     } catch (error) {
         throw new Error("Get to failed all user url. ", error);
     }
