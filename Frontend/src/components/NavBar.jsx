@@ -13,6 +13,7 @@ const Navbar = () => {
 
   const { user } = useContext(AuthContext);
   const { getAllUserUrls } = useUserAllUrls();
+
   return (
     <header className="container mx-auto relative z-10">
       <div className="flex justify-between items-center">
@@ -36,7 +37,7 @@ const Navbar = () => {
           >
             Home
           </Link>
-          <Link to='my-urls' onClick={() => getAllUserUrls()} className="text-purple-200 font-medium hover:text-pink-200">
+          <Link to='/my-urls' onClick={() => getAllUserUrls()} className="text-purple-200 font-medium hover:text-pink-200">
             My URLs
           </Link>
           {user ? (<Profile />): (<>
